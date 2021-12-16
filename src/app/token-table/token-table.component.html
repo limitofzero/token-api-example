@@ -1,0 +1,37 @@
+<table
+    tuiTable
+    class="table"
+    *tuiLet="(tokens$ | async) || [] as tokens"
+    [columns]="columns"
+>
+    <thead>
+    <tr tuiThGroup>
+        <th *tuiHead="'token'" tuiTh>Token</th>
+        <th *tuiHead="'balance'" tuiTh >
+            Balance
+        </th>
+    </tr>
+    </thead>
+    <tbody tuiTbody [data]="tokens">
+    <tr *tuiRow="let token of tokens" tuiTr>
+        <td *tuiCell="'token'" tuiTd>
+           <div class="token-col">
+               <img class="logo tui-space_right-2" [src]="token.logoURI"/> {{ token.name }}
+           </div>
+        </td>
+        <td *tuiCell="'balance'" tuiTd>
+            0
+        </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td [colSpan]="columns.length">
+            <tui-table-pagination
+                class="tui-space_top-2"
+                [total]="(total$ | async) || 0"
+            ></tui-table-pagination>
+        </td>
+    </tr>
+    </tfoot>
+</table>

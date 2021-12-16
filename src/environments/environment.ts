@@ -4,6 +4,7 @@
 
 export const environment = {
     production: false,
+    tokenListApiUrl: 'https://tokens-staging.1inch.io/v1.1',
 };
 
 /*
