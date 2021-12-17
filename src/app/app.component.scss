@@ -1,1 +1,11 @@
+.controls {
+    display: flex;
 
+    .input {
+        flex: 1
+    }
+
+    .select {
+        min-width: 150px;
+    }
+}

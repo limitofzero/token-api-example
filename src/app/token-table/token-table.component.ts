@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BehaviorSubject, combineLatest, map, startWith, switchMap } from 'rxjs';
 
-import { TokenService } from '../token.service';
+import { ExtendedToken, TokenService } from '../token.service';
+import { WalletStoreService } from '../wallet-store.service';
 
 @Component({
     selector: 'app-token-table',
@@ -35,12 +36,13 @@ export class TokenTableComponent {
         this.pageSize$,
     ]);
 
-    readonly columns = ['token', 'price', 'balance'];
-
-
+    readonly columns$ = this.walletStore.getAddress().pipe(
+        map(wallet => wallet ? ['token', 'price', 'balance', 'allowance'] : ['token', 'price'])
+    );
 
     constructor(
         private readonly tokenService: TokenService,
+        private readonly walletStore: WalletStoreService,
     ) {
     }
 
@@ -50,5 +52,9 @@ export class TokenTableComponent {
 
     pageSizeChanged(pageSize: number) {
         this.pageSize$.next(pageSize);
+    }
+
+    trackByFn(_: number, item: ExtendedToken): string {
+        return item.name;
     }
 }
