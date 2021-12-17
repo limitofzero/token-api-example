@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { BehaviorSubject, combineLatest, map, startWith, Subject, switchMap } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { BehaviorSubject, combineLatest, map, startWith, switchMap } from 'rxjs';
 
 import { TokenService } from '../token.service';
 
@@ -7,9 +7,10 @@ import { TokenService } from '../token.service';
     selector: 'app-token-table',
     templateUrl: './token-table.component.html',
     styleUrls: ['./token-table.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TokenTableComponent {
-    readonly page$ = new Subject<number>();
+    readonly page$ = new BehaviorSubject<number>(0);
 
     readonly pageSize$ = new BehaviorSubject(10);
 
@@ -23,7 +24,7 @@ export class TokenTableComponent {
             return this.paginator$.pipe(
                 map(([page, size]) => {
                     const startPageIndex = size * page;
-                    return tokens.slice(startPageIndex, size);
+                    return tokens.slice(startPageIndex, startPageIndex + size);
                 })
             );
         })
@@ -34,12 +35,20 @@ export class TokenTableComponent {
         this.pageSize$,
     ]);
 
-    readonly columns = ['token', 'balance'];
+    readonly columns = ['token', 'price', 'balance'];
 
 
 
     constructor(
         private readonly tokenService: TokenService,
     ) {
+    }
+
+    pageChanged(page: number) {
+        this.page$.next(page);
+    }
+
+    pageSizeChanged(pageSize: number) {
+        this.pageSize$.next(pageSize);
     }
 }

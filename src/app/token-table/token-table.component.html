@@ -7,17 +7,19 @@
     <thead>
     <tr tuiThGroup>
         <th *tuiHead="'token'" tuiTh>Token</th>
-        <th *tuiHead="'balance'" tuiTh >
-            Balance
-        </th>
+        <th *tuiHead="'price'" tuiTh>Price</th>
+        <th *tuiHead="'balance'" tuiTh >Balance</th>
     </tr>
     </thead>
     <tbody tuiTbody [data]="tokens">
-    <tr *tuiRow="let token of tokens" tuiTr>
+    <tr *tuiRow="let token of tokens;" tuiTr>
         <td *tuiCell="'token'" tuiTd>
            <div class="token-col">
                <img class="logo tui-space_right-2" [src]="token.logoURI"/> {{ token.name }}
            </div>
+        </td>
+        <td *tuiCell="'price'" tuiTd>
+            {{ token.price }}
         </td>
         <td *tuiCell="'balance'" tuiTd>
             0
@@ -28,8 +30,10 @@
     <tr>
         <td [colSpan]="columns.length">
             <tui-table-pagination
-                class="tui-space_top-2"
+                (pageChange)="pageChanged($event)"
+                (sizeChange)="pageSizeChanged($event)"
                 [total]="(total$ | async) || 0"
+                class="tui-space_top-2"
             ></tui-table-pagination>
         </td>
     </tr>
