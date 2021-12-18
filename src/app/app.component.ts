@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
     readonly chains: ReadonlyArray<{ name: string, id: string }> = [
         { name: 'etherium', id: '1' },
         { name: 'binance', id: '56' },
+        { name: 'polygon', id: '137' },
     ];
 
     readonly form = this.fb.group({

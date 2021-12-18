@@ -22,6 +22,8 @@ import {
     TokenPrices,
 } from './token-api.service';
 import { WalletStoreService } from './wallet-store.service';
+import { ethers } from "ethers";
+import { formatUnits } from "ethers/lib/utils";
 
 export interface ExtendedToken extends Token, AllowanceAndBalance {
     price: string;
@@ -91,11 +93,15 @@ export class TokenService {
     }
 
     private calculatePriceInUSD(wei: string, ethPriceInUSD: number): string {
-        return new BigNumber(wei).div(1e18).multipliedBy(ethPriceInUSD).decimalPlaces(2).toString();
+        return this.fromWei(wei, 18).multipliedBy(ethPriceInUSD).decimalPlaces(2).toString();
     }
 
     private convertTokenWeiToUSD(wei: string, decimals: number, usdPrice: string): string {
-        return new BigNumber(wei).div(10 ** decimals).multipliedBy(usdPrice).decimalPlaces(2).toString();
+        return this.fromWei(wei, decimals).multipliedBy(usdPrice).decimalPlaces(2).toString();
+    }
+
+    private fromWei(wei: string, decimals: number): BigNumber {
+        return new BigNumber(wei).div(10 ** decimals);
     }
 
     private combineTokensData(
@@ -112,7 +118,7 @@ export class TokenService {
             let { balance, allowance } = balanceAndAllowance;
 
             balance = balance ? this.convertTokenWeiToUSD(balance, token.decimals, tokenPrice) : '0';
-            allowance = allowance ? this.convertTokenWeiToUSD(allowance, token.decimals, tokenPrice): '0';
+            allowance = allowance ? this.fromWei(allowance, token.decimals).toString(): '0';
 
             extendedTokenMap[address] = {
                 ...token,

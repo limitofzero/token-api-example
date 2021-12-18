@@ -22,7 +22,7 @@ export interface AllowanceAndBalance {
 
 export type TokenAllowanceAndBalance = Record<string, AllowanceAndBalance>;
 
-type GeckoTokenString = 'ethereum' | 'binancecoin';
+type GeckoTokenString = 'ethereum' | 'binancecoin' | 'matic-network';
 
 type InUsd = { usd: number };
 
@@ -31,11 +31,13 @@ type CoinGeckoApiResponse = Partial<Record<GeckoTokenString, InUsd>>;
 const CHAIN_TOKEN: Readonly<Record<string, GeckoTokenString>> = {
     '1': 'ethereum',
     '56': 'binancecoin',
+    '137': 'matic-network'
 };
 
 const CONTRACT_ADDRESS: Readonly<Record<string, string>> = {
     '1': '0x1111111254fb6c44bac0bed2854e76f90643097d',
     '56': '0x1111111254fb6c44bac0bed2854e76f90643097d',
+    '137': '0x1111111254fb6c44bac0bed2854e76f90643097d',
 };
 
 @Injectable({
