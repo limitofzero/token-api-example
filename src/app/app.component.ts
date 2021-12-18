@@ -4,8 +4,8 @@ import { TuiContextWithImplicit, TuiDestroyService, tuiPure, TuiStringHandler } 
 import { debounceTime, startWith, takeUntil } from 'rxjs';
 
 import { ChainIdStoreService } from './chain-id-store.service';
+import { validateAddress } from './validators';
 import { WalletStoreService } from './wallet-store.service';
-import { validateAddress } from "./validators";
 
 @Component({
     selector: 'app-root',

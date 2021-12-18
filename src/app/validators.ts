@@ -1,6 +1,6 @@
-import { FormControl } from "@angular/forms";
-import { ethers } from "ethers";
+import { FormControl } from '@angular/forms';
+import { isAddress } from "ethers/lib/utils";
 
 export function validateAddress(control: FormControl) {
-    return ethers.utils.isAddress(control.value) ? null : { invalidAddress: true }
+    return isAddress(control.value as string) ? null : { invalidAddress: true };
 }

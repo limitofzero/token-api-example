@@ -22,8 +22,6 @@ import {
     TokenPrices,
 } from './token-api.service';
 import { WalletStoreService } from './wallet-store.service';
-import { ethers } from "ethers";
-import { formatUnits } from "ethers/lib/utils";
 
 export interface ExtendedToken extends Token, AllowanceAndBalance {
     price: string;

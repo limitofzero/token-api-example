@@ -31,7 +31,7 @@ type CoinGeckoApiResponse = Partial<Record<GeckoTokenString, InUsd>>;
 const CHAIN_TOKEN: Readonly<Record<string, GeckoTokenString>> = {
     '1': 'ethereum',
     '56': 'binancecoin',
-    '137': 'matic-network'
+    '137': 'matic-network',
 };
 
 const CONTRACT_ADDRESS: Readonly<Record<string, string>> = {
