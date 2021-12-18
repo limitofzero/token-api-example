@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { BehaviorSubject, combineLatest, map, startWith, switchMap } from 'rxjs';
 
 import { ExtendedToken, TokenService } from '../token.service';
@@ -11,6 +12,8 @@ import { WalletStoreService } from '../wallet-store.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TokenTableComponent {
+    readonly filterControl = new FormControl('');
+
     readonly page$ = new BehaviorSubject<number>(0);
 
     readonly pageSize$ = new BehaviorSubject(10);
@@ -21,6 +24,15 @@ export class TokenTableComponent {
     );
 
     readonly tokens$ = this.tokenService.getTokens().pipe(
+        switchMap((tokens) => {
+            return this.filterControl.valueChanges.pipe(
+                startWith(this.filterControl.value),
+                map((filterValue: string) => {
+                    filterValue = filterValue.toLowerCase();
+                    return filterValue ? tokens.filter(({ name }) => name.toLowerCase().includes(filterValue)) : tokens;
+                })
+            );
+        }),
         switchMap((tokens) => {
             return this.paginator$.pipe(
                 map(([page, size]) => {
