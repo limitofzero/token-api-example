@@ -16,7 +16,6 @@ import { ScrollingModule } from "@angular/cdk/scrolling";
     exports: [TokenTableComponent],
     imports: [
         CommonModule,
-        TuiTableModule,
         TuiTablePaginationModule,
         TuiLetModule,
         TuiInputModule,
