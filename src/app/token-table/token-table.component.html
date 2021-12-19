@@ -4,48 +4,29 @@
     </tui-input>
 </p>
 
-<table
-    tuiTable
-    class="table"
-    *tuiLet="(tokens$ | async) ?? [] as tokens"
-    [columns]="(columns$| async) ?? []"
->
-    <thead>
-    <tr tuiThGroup>
-        <th *tuiHead="'token'" tuiTh>Token</th>
-        <th *tuiHead="'price'" tuiTh>Price</th>
-        <th *tuiHead="'balance'" tuiTh >Balance</th>
-        <th *tuiHead="'allowance'" tuiTh >Allowance</th>
-    </tr>
-    </thead>
-    <tbody tuiTbody [data]="tokens">
-    <tr *ngFor="let token of tokens; trackBy:trackByFn" tuiTr>
-        <td *tuiCell="'token'" tuiTd>
-           <div class="token-col">
-               <img class="logo tui-space_right-2" [src]="token.logoURI"/> {{ token.name }}
-           </div>
-        </td>
-        <td *tuiCell="'price'" tuiTd>
-            {{ token.price }}
-        </td>
-        <td *tuiCell="'balance'" tuiTd>
-            {{ token.balance }}
-        </td>
-        <td *tuiCell="'allowance'" tuiTd>
-            {{ token.allowance }}
-        </td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr>
-        <td [colSpan]="(columns$ | async)?.length ?? 0">
-            <tui-table-pagination
-                (pageChange)="pageChanged($event)"
-                (sizeChange)="pageSizeChanged($event)"
-                [total]="(total$ | async) ?? 0"
-                class="tui-space_top-2"
-            ></tui-table-pagination>
-        </td>
-    </tr>
-    </tfoot>
-</table>
+<div class="token-list" *tuiLet="(tokens$ | async) ?? [] as tokens">
+    <div class="token-list-headers">
+        <div>Token</div>
+        <div>Price</div>
+        <div>Balance</div>
+        <div>Allowance</div>
+    </div>
+    <cdk-virtual-scroll-viewport class="token-list-body" tuiScrollable [itemSize]="30">
+        <div class="token-row" *cdkVirtualFor="let token of tokens; trackBy:trackByFn">
+            <div>
+                <div class="token-col">
+                    <img class="logo tui-space_right-2" [src]="token.logoURI"/> {{ token.name }}
+                </div>
+            </div>
+            <div>
+                {{ token.price }}
+            </div>
+            <div >
+                {{ token.balance }}
+            </div>
+            <div >
+                {{ token.allowance }}
+            </div>
+        </div>
+    </cdk-virtual-scroll-viewport>
+</div>

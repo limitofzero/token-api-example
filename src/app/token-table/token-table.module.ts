@@ -3,10 +3,11 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TuiTableModule, TuiTablePaginationModule } from '@taiga-ui/addon-table';
 import { TuiLetModule } from '@taiga-ui/cdk';
-import { TuiTextfieldControllerModule } from '@taiga-ui/core';
+import { TuiScrollbarModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
 import { TuiInputModule } from '@taiga-ui/kit';
 
 import { TokenTableComponent } from './token-table.component';
+import { ScrollingModule } from "@angular/cdk/scrolling";
 
 
 
@@ -15,12 +16,13 @@ import { TokenTableComponent } from './token-table.component';
     exports: [TokenTableComponent],
     imports: [
         CommonModule,
-        TuiTableModule,
         TuiTablePaginationModule,
         TuiLetModule,
         TuiInputModule,
         TuiTextfieldControllerModule,
         ReactiveFormsModule,
+        ScrollingModule,
+        TuiScrollbarModule,
     ],
 })
 export class TokenTableModule { }

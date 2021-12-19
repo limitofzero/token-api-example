@@ -1,10 +1,35 @@
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+
 :host {
     display: block;
     width: 100%;
 }
 
-table {
-    width: 100%;
+.token-list {
+    display: flex;
+    flex-direction: column;
+
+    &-headers {
+        display: flex;
+
+        div {
+            width: 25%;
+        }
+    }
+
+    &-body {
+        display: flex;
+        flex-direction: column;
+        height: 500px;
+
+        .token-row {
+            display: flex;
+
+            div {
+                width: 25%;
+            }
+        }
+    }
 }
 
 .token-col {
@@ -15,4 +40,10 @@ table {
         width: 30px;
         height: 30px;
     }
+}
+
+
+.scroll {
+    height: 500px;
+    width: 100%;
 }
