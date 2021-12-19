@@ -33,14 +33,6 @@ export class TokenTableComponent {
                 })
             );
         }),
-        switchMap((tokens) => {
-            return this.paginator$.pipe(
-                map(([page, size]) => {
-                    const startPageIndex = size * page;
-                    return tokens.slice(startPageIndex, startPageIndex + size);
-                })
-            );
-        })
     );
 
     readonly paginator$ = combineLatest([
